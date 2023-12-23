@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+
 const Header = () => {
   const [isNavFixed, setIsNavFixed] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // State to handle menu visibility
   const jobTitles = ["Software Engineer", "Pradeep Prajapati"];
   const [headerValue, setHeaderValue] = useState(jobTitles[0]);
   const [index, setIndex] = useState(0);
@@ -25,7 +27,7 @@ const Header = () => {
     };
   }, []);
 
-// Change header text 
+  // Change header text
   useEffect(() => {
     const timeout = setTimeout(() => {
       const newIndex = (index + 1) % jobTitles.length;
@@ -48,16 +50,16 @@ const Header = () => {
             to="/"
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
-            <span className="self-center ml-4 text-4xl font-semibold whitespace-nowrap font-bold text-blue-400 dark:text-white">
+            <span className="self-center ml-4 text-3xl sm:text-4xl font-semibold whitespace-nowrap font-bold text-blue-400 dark:text-white">
               {headerValue}
             </span>
           </Link>
           <button
-            data-collapse-toggle="navbar-default"
+            onClick={() => setIsMenuOpen(!isMenuOpen)} // Toggle menu visibility
             type="button"
             className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
             aria-controls="navbar-default"
-            aria-expanded="false"
+            aria-expanded={isMenuOpen ? "true" : "false"} // Update aria-expanded based on menu state
           >
             <span className="sr-only">Open main menu</span>
             <svg
@@ -76,7 +78,12 @@ const Header = () => {
               />
             </svg>
           </button>
-          <div className="hidden w-full md:block md:w-auto mr-20" id="navbar-default">
+          <div
+            className={`${
+              isMenuOpen ? "block" : "hidden"
+            } w-full md:block md:w-auto mr-20`} // Toggle visibility based on state
+            id="navbar-default"
+          >
             <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li>
                 <Link
@@ -87,13 +94,13 @@ const Header = () => {
                   Home
                 </Link>
               </li>
-              
+
               <li>
                 <Link
                   to="/Skill"
                   className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                 >
-                  Skills
+                  Skill
                 </Link>
               </li>
               <li>
